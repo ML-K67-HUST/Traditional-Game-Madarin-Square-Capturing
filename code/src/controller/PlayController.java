@@ -152,8 +152,10 @@ public class PlayController{
     private Competitors players;
     private Board board;
     int numberOfCells;
+
     private Pane selectedPane = null;
     private ArrayList<Integer[]> list = new ArrayList<>();
+
 
     public PlayController(Competitors players) { // just use players to access data
         this.players = players;
@@ -302,6 +304,7 @@ public class PlayController{
 
                     // Set the clicked pane as the selected pane
                     selectedPane = pane;
+
                     try {
                         handleCellClick(pane, index);
                     } catch (EmptyCellException e) {
@@ -462,7 +465,12 @@ public class PlayController{
 
             // Show direction
             showDirection(pane);
-
+            for (int j = 0; j < paneList.size(); j++) {
+                if (j != index) {
+                    Pane paneAround = paneList.get(j);
+                    paneAround.setDisable(true);
+                }
+            }
         }
     }
     public void switchTurn(Pane paneChosen){
@@ -519,6 +527,7 @@ public class PlayController{
         }
     }
 
+
     public void hideDirection(Pane pane) {
         // Retrieve the children of the Pane
         List<Node> children = pane.getChildren();
@@ -533,7 +542,7 @@ public class PlayController{
         }
     }
 
-    // Method to update gem images in a cell
+
     public void setDisplay(Board board){
 
         for (int i=0; i < board.getCells().length; i++){
@@ -543,6 +552,7 @@ public class PlayController{
                     Text text = (Text) child; //downcasting
                     if (child.getId().startsWith("numGems")) {
                         text.setText(Integer.toString(board.getCells()[i].getGemList().size()));
+
                     }
                 }
                 if (child instanceof FlowPane) {
@@ -553,6 +563,7 @@ public class PlayController{
                         gemImage.setFitHeight(20);
                         gemImage.setFitWidth(20);
                         container.getChildren().add(gemImage);
+
                     }
                 }
             }
@@ -604,6 +615,7 @@ public class PlayController{
                             Text text = (Text) child; //downcasting
                             if (child.getId().startsWith("numGems")) {
                                 text.setText(Integer.toString(cell.getGemList().size()));
+
                             }
                         }
                         if (child instanceof FlowPane) {
@@ -628,6 +640,7 @@ public class PlayController{
                                 bigGem2.setVisible(false);
                             }else{
                                 bigGem2.setVisible(true);
+
                             }
                         }
                     }
@@ -676,6 +689,7 @@ public class PlayController{
                                 bigGem2.setVisible(false);
                             }else{
                                 bigGem2.setVisible(true);
+
                             }
                         }
                     }
