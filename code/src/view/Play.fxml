@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="768.0" fitWidth="1024.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -401,14 +397,14 @@
                   <Image url="@images/winner.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnHomeWinner" layoutX="128.0" layoutY="288.0" mnemonicParsing="false" opacity="0.0" prefHeight="52.0" prefWidth="179.0" text="Home" />
+            <Button fx:id="btnHomeWinner" contentDisplay="CENTER" layoutX="128.0" layoutY="288.0" mnemonicParsing="false" opacity="0.0" prefHeight="52.0" prefWidth="179.0" text="Home" textAlignment="CENTER" />
             <Button fx:id="btnPlayAgain" layoutX="128.0" layoutY="205.0" mnemonicParsing="false" opacity="0.0" prefHeight="52.0" prefWidth="179.0" text="Play Again" />
             <Text fx:id="winnerName" fill="BLACK" fontSmoothingType="LCD" layoutX="555.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER">
                <font>
                   <Font name="Montserrat Alternates ExtraBold" size="38.0" />
                </font>
             </Text>
-            <Text fx:id="player1Winner" fill="BLACK" layoutX="80.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" textAlignment="RIGHT" wrappingWidth="185.3349609375">
+            <Text fx:id="player1Winner" fill="BLACK" layoutX="80.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="RIGHT" wrappingWidth="185.3349609375">
                <font>
                   <Font name="SansSerif Bold" size="35.0" />
                </font>
@@ -428,6 +424,7 @@
                   <Font size="35.0" />
                </font>
             </Text>
+            <Button fx:id="seeAnalyzeButton" layoutX="590.0" layoutY="92.0" mnemonicParsing="false" text="?" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="helpScreen" layoutX="34.0" layoutY="92.0" prefHeight="600.0" prefWidth="960.0" visible="false">

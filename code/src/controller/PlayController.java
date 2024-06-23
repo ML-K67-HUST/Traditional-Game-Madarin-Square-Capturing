@@ -33,7 +33,7 @@ import model.player.Player;
 import myexception.AllEmptyCellOnSideException;
 import myexception.EmptyCellException;
 import model.player.Competitors;
-
+import controller.Visualize;
 public class PlayController{
 
     @FXML
@@ -103,6 +103,9 @@ public class PlayController{
     private Button btnPlayAgain;
 
     @FXML
+    private Button seeAnalyzeButton;
+
+    @FXML
     private AnchorPane endGameScreen;
 
     @FXML
@@ -141,7 +144,7 @@ public class PlayController{
     @FXML
     private Button btnExit;
 
-    @FXML 
+    @FXML
     private Button btnReplay;
 
     private Timeline timeline = new Timeline() ;
@@ -150,6 +153,7 @@ public class PlayController{
     private Board board;
     int numberOfCells;
     private Pane selectedPane = null;
+    private ArrayList<Integer[]> list = new ArrayList<>();
 
     public PlayController(Competitors players) { // just use players to access data
         this.players = players;
@@ -163,7 +167,7 @@ public class PlayController{
         alert.setTitle("Exit Confirmation");
         alert.setHeaderText("Exit Game");
         alert.setContentText("Are you sure you want to exit?");
-        Optional<ButtonType> res = alert.showAndWait(); 
+        Optional<ButtonType> res = alert.showAndWait();
         if (res.get() == ButtonType.OK) {
             // quit game
             Stage stage = (Stage) btnExit.getScene().getWindow();
@@ -205,7 +209,7 @@ public class PlayController{
                 stage.setScene(new Scene(root));
                 stage.setTitle("O An Quan Home Screen");
                 stage.show();
-        
+
                 // Close the current stage (optional)
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 currentStage.close();
@@ -224,7 +228,7 @@ public class PlayController{
             //display
             this.setDisplay(board);
         });
-        
+
         //hide direction initially
         for (int i=0; i < numberOfCells; i++){
             Pane pane = paneList.get(i);
@@ -236,7 +240,7 @@ public class PlayController{
                 }
             }
         }
-        
+
         //set play again button
         btnPlayAgain.setOnAction(event ->{
             endGameScreen.setVisible(false);
@@ -261,7 +265,7 @@ public class PlayController{
                 stage.setScene(new Scene(root));
                 stage.setTitle("Home Screen");
                 stage.show();
-        
+
                 // Close the current stage (optional)
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 currentStage.close();
@@ -269,7 +273,21 @@ public class PlayController{
                 e.printStackTrace();
             }
         });
-        
+        seeAnalyzeButton.setOnAction(event -> {
+            // Convert list to an Integer[][] array
+            Integer[][] scoresArray = new Integer[list.size()][2];
+            for (int i = 0; i < list.size(); i++) {
+                scoresArray[i][0] = list.get(i)[0];
+                scoresArray[i][1] = list.get(i)[1];
+            }
+
+            // Launch the Visualize application in a new thread
+            new Thread(() -> {
+                Visualize.visualize(scoresArray);
+            }).start();
+        });
+
+
         for (int i = 0; i < numberOfCells; i++) {
             int index = i;
 
@@ -375,7 +393,7 @@ public class PlayController{
                             this.setMotionDisplay(players.getItinerary(), pane);
 
                             players.setItinerary(new ArrayList<Cell>());
- 
+
                             event1.consume();
                         });
 
@@ -385,7 +403,6 @@ public class PlayController{
             }
         }
 
-        // Initialize play
         Random rand = new Random();
         int randTurn = rand.nextInt(2) + 1;
         players.setTurn(randTurn);
@@ -404,11 +421,11 @@ public class PlayController{
                         //set opacity for text
                         pane.setDisable(true);
                     }
-                        
+
                 }
             }
-            
-            
+
+
         }else{
             turnPlayer1.setVisible(false);
             turnPlayer2.setVisible(true);
@@ -439,7 +456,7 @@ public class PlayController{
                 }
                 throw new EmptyCellException("Please click on a non-empty cell!");
             }
-            
+
         } else {
             System.out.println("Cell clicked");
 
@@ -448,9 +465,8 @@ public class PlayController{
 
         }
     }
-
     public void switchTurn(Pane paneChosen){
-    
+
         if (players.getTurn() == 1){
             // display turn
             turnPlayer1.setVisible(false);
@@ -461,7 +477,7 @@ public class PlayController{
                     Pane pane = paneList.get(i);
                     if (i < 6){
                         pane.setDisable(true);
-                        
+
                     }
                     else
                         pane.setDisable(false);
@@ -473,7 +489,7 @@ public class PlayController{
             // display turn
             turnPlayer1.setVisible(true);
             turnPlayer2.setVisible(false);
-            
+
             for (int i=0; i < numberOfCells; i++) {
                 if ((i != 0) && (i != 6)){
                     Pane pane = paneList.get(i);
@@ -488,7 +504,7 @@ public class PlayController{
             players.setTurn(1);
             }
         }
-    
+
     public void showDirection(Pane pane) {
         // Retrieve the children of the Pane
         List<Node> children = pane.getChildren();
@@ -498,7 +514,7 @@ public class PlayController{
             if (child instanceof ImageView && !child.getId().startsWith("big")) {
                 ImageView imageView = (ImageView) child;
                 // Set the visibility of the ImageView to true
-                imageView.setVisible(true); 
+                imageView.setVisible(true);
             }
         }
     }
@@ -512,7 +528,7 @@ public class PlayController{
             if (child instanceof ImageView && !child.getId().startsWith("big")) {
                 ImageView imageView = (ImageView) child;
                 // Set the visibility of the ImageView to false
-                imageView.setVisible(false); 
+                imageView.setVisible(false);
             }
         }
     }
@@ -537,7 +553,7 @@ public class PlayController{
                         gemImage.setFitHeight(20);
                         gemImage.setFitWidth(20);
                         container.getChildren().add(gemImage);
-                    }  
+                    }
                 }
             }
             if (i == 0){
@@ -562,7 +578,7 @@ public class PlayController{
 
 
     public void setMotionDisplay(List<Cell> itinerary, Pane paneChosen) {
-    
+
         List<Node> children = paneChosen.getChildren();
         // Set both direction buttons in the pane to invisible after clicking
         for (Node child : children) {
@@ -582,7 +598,7 @@ public class PlayController{
                 Pane pane = paneList.get(id);
                 timeline.getKeyFrames().addAll(new KeyFrame(Duration.seconds(i*0.5), event -> { // time to display
                 if (!board.endGame()){
-                        
+
                     for (Node child : pane.getChildren()) {
                         if (child instanceof Text) {
                             Text text = (Text) child; //downcasting
@@ -598,7 +614,7 @@ public class PlayController{
                                 gemImage.setFitHeight(20);
                                 gemImage.setFitWidth(20);
                                 container.getChildren().add(gemImage);
-                            } 
+                            }
                         }
                         if(id == 0){
                             if(cell.getNumberOfBigGems() == 0){
@@ -620,13 +636,17 @@ public class PlayController{
 
                     if (index == longDisplay-1){
                         scorePlayer2.setText(Integer.toString(players.getPlayer2().getScore()));
+                        System.out.println("score of player2: "+ (players.getPlayer2().getScore()));
                         scorePlayer1.setText(Integer.toString(players.getPlayer1().getScore()));
+                        System.out.println("score of player1: "+ (players.getPlayer1().getScore()));
+                        list.add(new Integer[]{players.getPlayer1().getScore(), players.getPlayer2().getScore()});
+                        System.out.println(list);
                         switchTurn(paneChosen);
-                    } 
+                    }
                 }
 
                 if (board.endGame()){
-    
+
                     for (Node child : pane.getChildren()) {
                         if (child instanceof Text) {
                             Text text = (Text) child; //downcasting
@@ -642,8 +662,8 @@ public class PlayController{
                                 gemImage.setFitHeight(20);
                                 gemImage.setFitWidth(20);
                                 container.getChildren().add(gemImage);
-                            } 
-                        } 
+                            }
+                        }
                         if(id == 0){
                             if(cell.getNumberOfBigGems() == 0){
                                 bigGem1.setVisible(false);
