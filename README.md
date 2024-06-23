@@ -2,6 +2,8 @@
 
 Welcome to the Mandarin Square Capturing game! This project is a digital implementation of the traditional Mandarin Square Capturing game, developed using Java and JavaFX. The game involves capturing squares on a board by placing stones, aiming to capture the most territory.
 
+![image](https://github.com/ML-K67-HUST/Traditional-Game-Madarin-Square-Capturing/assets/112315454/fb7f68ee-79f6-40ae-8f93-7bad6c15c5fe)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
