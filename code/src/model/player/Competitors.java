@@ -99,7 +99,7 @@ public class Competitors { //set action of players with board. Do not make for e
 
     public void borrow(Player playerOne, Player playerTwo){ // 1 borrow 2
         if (player1.equals(playerOne) && player2.equals(playerTwo)){
-            player2.setScore(player2.getScore()- 5);
+            player2.setScore(player2.getScore()-5);
             creditHistory.put(1, 5);
             for (int i = 0; i < 5; i++){
                 Gem smallGem = new SmallGem();
@@ -107,7 +107,7 @@ public class Competitors { //set action of players with board. Do not make for e
             }
         } 
         else if (player1.equals(playerTwo) && player2.equals(playerOne)){
-            player1.setScore(player2.getScore()-5);
+            player1.setScore(player1.getScore()-5);
             creditHistory.put(2, 5);
             for (int i = 0; i < 5; i++){
                 Gem smallGem = new SmallGem();
